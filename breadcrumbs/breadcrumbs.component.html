@@ -1,0 +1,13 @@
+<ng-container *ngFor="let b of (breadcrumbsService.breadcrumbs$ | async); last as isLast">
+  <a [routerLink]="b.url" class="breadcrumbs__item breadcrumbs__link" *ngIf="!isLast && !b.disabled">
+    {{ 'BREADCRUMBS.' + b.name | translate }}
+  </a>
+
+  <span class="breadcrumbs__item breadcrumbs__label" *ngIf="isLast || b.disabled">
+    {{ 'BREADCRUMBS.' + b.name | translate }}
+  </span>
+
+  <mat-icon *ngIf="!isLast" class="breadcrumbs__icon" [ngClass]="{ breadcrumbs__icon_disabled: true }">
+    keyboard_arrow_right
+  </mat-icon>
+</ng-container>

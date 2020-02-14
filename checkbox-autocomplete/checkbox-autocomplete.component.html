@@ -1,0 +1,80 @@
+<div class="multiple-autocomplete">
+  <mat-form-field
+    class="form__field"
+    [ngClass]="{ 'mat-form-field-invalid': invalid }"
+    (click)="openPanel()"
+    appearance="outline"
+  >
+    <mat-label *ngIf="label">{{ label }}</mat-label>
+
+    <mat-chip-list
+      #chipList
+      [formControl]="chipListControl"
+      [ngClass]="{ 'mat-chip-list_filled': selectedItems.length }"
+    >
+      <mat-chip
+        *ngFor="let item of selectedItems | slice: 0:3"
+        [selectable]="true"
+        [disabled]="chipListControl.disabled"
+        class="text_ellipsis"
+      >
+        {{ displayWith(item) }}
+      </mat-chip>
+
+      <span *ngIf="selectedItems.length > 3" class="multiple-autocomplete__additional-chip"
+        >(+{{ selectedItems.length - 3 }})</span
+      >
+
+      <input
+        #input
+        matInput
+        class="input"
+        [placeholder]="selectedItems.length ? '' : 'Выберите или начните вводить'"
+        [formControl]="inputControl"
+        [required]="required"
+        [matAutocomplete]="autocomplete"
+        [matChipInputFor]="chipList"
+        [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+        (blur)="onBlur()"
+      />
+    </mat-chip-list>
+
+    <div class="arrow-down">
+      <mat-icon class="arrow-down__icon" [ngClass]="{ 'arrow-down__icon_invalid': invalid }">
+        arrow_drop_down
+      </mat-icon>
+    </div>
+
+    <mat-autocomplete #autocomplete="matAutocomplete" [displayWith]="displayWith">
+      <div class="multiple-autocomplete__actions">
+        <button
+          mat-stroked-button
+          (click)="onSelectAllChips()"
+          color="primary"
+          class="multiple-autocomplete__actions-button"
+        >
+          Выбрать все
+        </button>
+
+        <button
+          mat-stroked-button
+          (click)="onRemoveAllChips()"
+          color="primary"
+          class="multiple-autocomplete__actions-button"
+        >
+          Снять выбор
+        </button>
+      </div>
+
+      <mat-option *ngFor="let item of items" [value]="item">
+        <div (click)="onSelect($event, item)">
+          <mat-checkbox [checked]="itemChecked(item)" (click)="$event.preventDefault()" color="primary">{{
+            displayWith(item)
+          }}</mat-checkbox>
+        </div>
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+
+  <app-error *ngIf="invalid" top="55px">Пожалуйста, выберите элемент из списка</app-error>
+</div>

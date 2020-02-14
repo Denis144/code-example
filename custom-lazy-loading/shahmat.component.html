@@ -1,0 +1,41 @@
+<div #catalogShahmat class="shahmat catalog-shahmat">
+
+
+<!-- Вывод шахматки для нескольких домов с компонентами flat
+  Когда пользователь скроллит до правой границы drag-scroll вызывается onReachRightBound меняющий countLoadShahmats  -->
+
+  <drag-scroll
+    #dragScroll
+    *ngIf="shahmat?.grid?.length"
+    [snap-disabled]="true"
+    (reachesRightBound)="onReachRightBound($event)"
+    class="shahmat__wrapper scrollbar"
+  >
+    <div class="will-change">
+      <div *ngFor="let entrance of shahmat.grid | slice: 0:countLoadShahmats" class="entrance" drag-scroll-item>
+        <div class="entrance__header">
+          <div class="entrance__number">Подъезд {{ entrance.number }}</div>
+        </div>
+
+        <div *ngFor="let floor of entrance.floors" class="floor">
+          <div (click)="openFloorLayoutDialog(floor)" class="floor__number" [ngClass]="floorClassNames(floor)">
+            {{ floor.number }}
+          </div>
+
+          <app-shahmat-flat
+            *ngFor="let flat of floor.flats"
+            [type]="type"
+            [flat]="flat"
+            (click)="onFlatSelected(flat)"
+            (mouseenter)="showFlatTooltip(flat, $event)"
+            (mouseleave)="hideFlatTooltip()"
+          ></app-shahmat-flat>
+        </div>
+      </div>
+    </div>
+  </drag-scroll>
+
+  <mat-spinner *ngIf="isReachedRightBorder" class="catalog-shahmat__spinner"></mat-spinner>
+</div>
+
+<div *ngIf="shahmat && shahmat.updateDate" class="catalog-shahmat-date">Дата обновления: {{ getUpdateDate() }}</div>
