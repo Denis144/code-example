@@ -1,0 +1,35 @@
+@import '~assets/styles/variables';
+
+.range-floors-form {
+  border: 0;
+  margin: 0;
+  padding: 0;
+
+  &__action {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    margin-top: 10px;
+
+    &-button:last-child {
+      align-items: center;
+      display: flex;
+      margin-left: 8px;
+    }
+
+    &_clear {
+      position: absolute;
+      right: -12px;
+      top: 32%;
+
+      @media #{$mobile-screen-lg-min} {
+        right: -12px;
+        top: 12%;
+      }
+    }
+
+    &-icon {
+      margin-right: 14px;
+    }
+  }
+}

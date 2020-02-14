@@ -1,0 +1,27 @@
+@import '~assets/styles/variables';
+
+.range-floor-form {
+  border: 0;
+  margin: 0;
+  padding: 0;
+
+  &__group {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-top: 16px;
+    padding: 0 34px 0 8px;
+    position: relative;
+    width: 100%;
+
+    @media #{$mobile-screen-lg-min} {
+      flex-direction: row;
+    }
+  }
+
+  &__field {
+    &:first-child {
+      margin-right: 16px;
+    }
+  }
+}

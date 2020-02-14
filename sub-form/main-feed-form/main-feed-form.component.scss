@@ -1,0 +1,18 @@
+@import '~assets/styles/variables';
+
+.main-feed-form {
+  display: flex;
+  flex-direction: column;
+  padding: 0 8px;
+
+  &__toggle {
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 23px;
+    margin-bottom: 24px;
+  }
+
+  &__error {
+    margin-top: 10px;
+  }
+}

@@ -1,0 +1,40 @@
+<fieldset [formGroup]="formGroup" class="filters-form">
+  <h3 class="filters-form__title">
+    <span class="filters-form__title-text">Фильтр объявлений ЦИАН</span>
+
+    <button
+      mat-mini-fab
+      color="primary"
+      type="button"
+      [disabled]="loading"
+      (click)="addFurnishVariant()"
+      class="filters-form__title-button mat-elevation-z"
+    >
+      <mat-icon>add</mat-icon>
+    </button>
+  </h3>
+
+  <div
+    formArrayName="cianAdFilters"
+    *ngFor="let cianAdFilter of formGroupControls.cianAdFilters.controls; let i = index"
+  >
+    <app-cian-feed-filter
+      [formDataFilters]="cianAdFilter.value"
+      [formControl]="cianAdFilter"
+      [filterIndex]="i"
+      [formSubmitted$]="formSubmitted$"
+      class="filters-form__item"
+    >
+      <div>
+        <button
+          type="button"
+          [disabled]="loading"
+          (click)="removeFeedFilter(i)"
+          class="filters-form__delete-button form__button form__card-button mat-elevation-z"
+        >
+          Удалить
+        </button>
+      </div>
+    </app-cian-feed-filter>
+  </div>
+</fieldset>

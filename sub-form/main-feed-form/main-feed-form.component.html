@@ -1,0 +1,36 @@
+<form [formGroup]="formGroup" (ngSubmit)="onSubmit()" class="row main-feed-form">
+  <mat-slide-toggle [formControl]="formGroupControls.enabled" color="primary" class="main-feed-form__toggle">
+    Добавить в фид
+  </mat-slide-toggle>
+
+  <app-cian-feed-filters
+    [formSubmitted$]="$formSubmitted"
+    [formControlName]="formControlNames.filters"
+    [loading]="loading"
+  ></app-cian-feed-filters>
+
+  <div class="row">
+    <div class="col-xs-12 col-sm-3">
+      <button mat-flat-button color="primary" [disabled]="loading" class="button">
+        Сохранить
+      </button>
+    </div>
+
+    <div class="col-xs-12 col-sm-2">
+      <button
+        mat-stroked-button
+        color="primary"
+        type="button"
+        [routerLink]="isEdit ? '../..' : '..'"
+        [disabled]="loading"
+        class="button"
+      >
+        Отмена
+      </button>
+    </div>
+  </div>
+
+  <mat-error class="main-feed-form__error" *ngIf="formGroup.dirty && !formGroupControls?.filters?.value?.length">
+    Пожалуйста, выберете хотя бы один фильтр
+  </mat-error>
+</form>

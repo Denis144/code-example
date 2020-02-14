@@ -1,0 +1,41 @@
+<fieldset [formGroup]="formGroup" class="range-floor-form">
+  <div class="range-floor-form__group col-xs-12">
+    <mat-form-field class="form__field range-floor-form__field" appearance="outline">
+      <mat-label>Этажи от</mat-label>
+
+      <input matInput required placeholder="Введите этаж" [formControlName]="formControlNames.startFloor" />
+
+      <mat-error *ngIf="formGroupErrors?.startFloor?.required">
+        Пожалуйста, введите этаж
+      </mat-error>
+
+      <mat-error *ngIf="formGroupErrors?.startFloor?.max">
+        Введен некорректный диапазон
+      </mat-error>
+
+      <mat-error *ngIf="formGroupErrors?.startFloor?.min">
+        Значение этажа должно быть больше нуля
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="form__field crange-floor-form__field" appearance="outline">
+      <mat-label>Этажи до</mat-label>
+
+      <input matInput required placeholder="Введите этаж" [formControlName]="formControlNames.finishFloor" />
+
+      <mat-error *ngIf="formGroupErrors?.finishFloor?.required">
+        Пожалуйста, введите этаж
+      </mat-error>
+
+      <mat-error *ngIf="formGroupErrors?.formGroup?.matchFloor">
+        Введен некорректный диапазон
+      </mat-error>
+
+      <mat-error *ngIf="formGroupErrors?.finishFloor?.min">
+        Значение этажа должно быть больше нуля
+      </mat-error>
+    </mat-form-field>
+
+    <ng-content></ng-content>
+  </div>
+</fieldset>

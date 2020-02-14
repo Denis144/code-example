@@ -1,0 +1,29 @@
+<fieldset [formGroup]="formGroup" class="range-floors-form">
+  <div
+    [formArrayName]="formControlNames.rangeFloors"
+    *ngFor="let rangeFloor of formGroupControls.rangeFloors.controls; let i = index"
+  >
+    <app-cian-range-floor [formControl]="rangeFloor" [formSubmitted$]="formSubmitted$">
+      <button
+        mat-icon-button
+        (click)="removeFloor(i)"
+        [disabled]="formGroup.disabled"
+        class="range-floors-form__action_clear"
+      >
+        <mat-icon color="warn">clear</mat-icon>
+      </button>
+    </app-cian-range-floor>
+  </div>
+
+  <div class="range-floors-form__action">
+    <button
+      type="button"
+      [disabled]="formGroup.disabled"
+      (click)="addFloor()"
+      class="form__button form__card-button range-floors-form__action-button mat-elevation-z"
+    >
+      <mat-icon color="primary" class="range-floors-form__action-icon">add</mat-icon>
+      Добавить этаж
+    </button>
+  </div>
+</fieldset>

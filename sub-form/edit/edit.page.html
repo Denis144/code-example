@@ -1,0 +1,17 @@
+<mat-card class="card cian card_large">
+  <mat-progress-bar class="loader loader_absolute" *ngIf="(loading$ | async)" mode="indeterminate"></mat-progress-bar>
+
+  <mat-card-title>
+    <h1 *ngIf="cianFilters$ | async as cianFilters" class="cian__title">{{ cianFilters.houseName }}</h1>
+    <p class="cian__subtitle">Вы можете ограничить выборку квартир с помощью фильтров</p>
+  </mat-card-title>
+
+  <mat-card-content *ngIf="feedFilterForm">
+    <app-cian-main-feed-form
+      [feedFilter]="feedFilterForm"
+      (feedFilterUpdated)="onSubmit($event)"
+      [loading]="loading$ | async"
+      [isEdit]="true"
+    ></app-cian-main-feed-form>
+  </mat-card-content>
+</mat-card>
