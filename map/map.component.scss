@@ -1,0 +1,59 @@
+@import '~assets/styles/variables';
+
+.catalog-map {
+  box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 1px 3px 0 rgba(0, 0, 0, 0.12);
+  margin-bottom: 16px;
+  max-height: 100px;
+  transition: max-height $transition-duration;
+
+  &_expanded {
+    max-height: 500px;
+  }
+
+  &__preview {
+    background-image: url('/assets/images/map-preview.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100px;
+  }
+
+  &__preview,
+  &__baloon {
+    cursor: pointer;
+  }
+
+  &__baloon {
+    text-decoration: none;
+  }
+
+  &__complex-render {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 197px;
+    width: 327px;
+  }
+
+  &__complex-content {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    padding: 16px 16px 8px;
+  }
+
+  &__complex-price {
+    color: $primary-color;
+    font-size: 20px;
+    font-weight: 500;
+    letter-spacing: 0.15px;
+  }
+
+  &__complex-name {
+    color: rgba(0, 0, 0, 0.87);
+    font-size: 20px;
+    font-weight: 500;
+    letter-spacing: 0.15px;
+    margin: 4px 0 8px;
+  }
+}

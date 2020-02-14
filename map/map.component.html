@@ -1,0 +1,4 @@
+<div class="catalog-map" [ngClass]="{ 'catalog-map_expanded': showMap }">
+  <div *ngIf="showMap" #map [ngStyle]="{ height: '500px' }"></div>
+  <div *ngIf="!showMap" class="catalog-map__preview" (click)="getMapObjects()"></div>
+</div>
