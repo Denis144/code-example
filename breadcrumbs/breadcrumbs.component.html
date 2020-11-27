@@ -1,13 +1,27 @@
-<ng-container *ngFor="let b of (breadcrumbsService.breadcrumbs$ | async); last as isLast">
-  <a [routerLink]="b.url" class="breadcrumbs__item breadcrumbs__link" *ngIf="!isLast && !b.disabled">
-    {{ 'BREADCRUMBS.' + b.name | translate }}
-  </a>
+<ol class="breadcrumbs">
+  <ng-container *ngFor="let breadcrumb of breadcrumbsService?.breadcrumbs$ | async; let last = last">
+    <ng-container *ngIf="additionalLabels[breadcrumb?.url] as additionalLabel">
+      <li
+        [routerLink]="additionalLabel.url"
+        [routerLinkActiveOptions]="{ exact: true }"
+        routerLinkActive="breadcrumbs-item_active"
+        class="breadcrumbs-item"
+      >
+        {{ additionalLabel?.label }}
+      </li>
 
-  <span class="breadcrumbs__item breadcrumbs__label" *ngIf="isLast || b.disabled">
-    {{ 'BREADCRUMBS.' + b.name | translate }}
-  </span>
+      <mat-icon>{{ divideIcon }}</mat-icon>
+    </ng-container>
 
-  <mat-icon *ngIf="!isLast" class="breadcrumbs__icon" [ngClass]="{ breadcrumbs__icon_disabled: true }">
-    keyboard_arrow_right
-  </mat-icon>
-</ng-container>
+    <li
+      [routerLink]="breadcrumb.url"
+      [routerLinkActiveOptions]="{ exact: true }"
+      routerLinkActive="breadcrumbs-item_active"
+      class="breadcrumbs-item"
+    >
+      {{ breadcrumb.label }}
+    </li>
+
+    <mat-icon *ngIf="!last">{{ divideIcon }}</mat-icon>
+  </ng-container>
+</ol>

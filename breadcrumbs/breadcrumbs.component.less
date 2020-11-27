@@ -1,0 +1,26 @@
+@import "~src/styles/variables/colors";
+
+.breadcrumbs {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+
+  &-item {
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 16px;
+
+    &:hover {
+      background-color: @lightest-gray;
+    }
+
+    &_active {
+      cursor: not-allowed;
+
+      &:hover {
+        background-color: transparent;
+      }
+    }
+  }
+}
