@@ -1,0 +1,126 @@
+<div
+  class="table-groups"
+  [ngClass]="{ 'table-groups_new-ui': isNewUI(), 'table-groups__loading': loading }"
+  *ngIf="displayedColumns"
+>
+  <mat-spinner *ngIf="loading"></mat-spinner>
+
+  <div [hidden]="loading">
+    <mat-table
+      class="table"
+      [dataSource]="sortedData || dataSource"
+      matSort
+      class="table"
+      [ngClass]="{ 'table-empty': !dataSource || !dataSource.length }"
+      [matSortActive]="currentSort.column"
+      [matSortDirection]="currentSort.direction"
+    >
+      <ng-container
+        *ngFor="let column of columnsDescription; index as cix; trackBy: trackByIndex"
+        [matColumnDef]="column.key"
+      >
+        <ng-container *ngIf="sorting?.includes(column.header); else isNotSorting">
+          <mat-header-cell [style.maxWidth]="column.width" *matHeaderCellDef mat-sort-header>
+            {{ column.header }}
+          </mat-header-cell>
+        </ng-container>
+        <ng-template #isNotSorting>
+          <mat-header-cell [style.maxWidth]="column.width" *matHeaderCellDef>
+            {{ column.header }}
+          </mat-header-cell>
+        </ng-template>
+        <mat-cell [style.maxWidth]="column.width" [class]="column.class" *matCellDef="let row">
+          <ng-container [ngSwitch]="column.type">
+            <ng-container *ngSwitchCase="'actions'">
+              <app-table-cell-actions
+                [rowId]="row.id"
+                [actions]="getActions(row, column)"
+                (onActionClick)="onActionClick($event, row)"
+              ></app-table-cell-actions>
+            </ng-container>
+
+            <ng-container *ngSwitchCase="'content'">
+              <span class="container-align">
+                <ng-container
+                  *ngTemplateOutlet="
+                    templateSortedByKeyList[column.key];
+                    context: { id: row.id, cellValue: column.cell | tableCellFormat: row, data: row }
+                  "
+                >
+                </ng-container>
+              </span>
+            </ng-container>
+
+            <ng-container *ngSwitchCase="'format'">
+              <span class="container-align">
+                <span *ngIf="!column.hint" [innerHTML]="column.cell | tableCellFormat: row | translate"></span>
+                <span
+                  *ngIf="column.hint"
+                  [matTooltip]="column.hint(row)"
+                  [innerHTML]="column.cell | tableCellFormat: row | translate"
+                ></span>
+              </span>
+            </ng-container>
+
+            <ng-container *ngSwitchDefault>
+              <span
+                *ngIf="!column.hint"
+                [attr.highlighting]="(column.highlighting && column.highlighting(row)) || false"
+                [innerHTML]="column.cell | tableCellFormat: row | translate"
+              ></span>
+              <span
+                *ngIf="column.hint"
+                [matTooltip]="column.hint(row)"
+                [attr.highlighting]="(column.highlighting && column.highlighting(row)) || false"
+                [innerHTML]="column.cell | tableCellFormat: row | translate"
+              ></span>
+            </ng-container>
+          </ng-container>
+        </mat-cell>
+        <ng-container *ngIf="showSummary">
+          <mat-footer-cell
+            *matFooterCellDef
+            [style.maxWidth]="column.width"
+            [hidden]="!dataSource || !dataSource.length"
+          >
+            {{ summary ? summary[cix] : '' }}
+          </mat-footer-cell>
+        </ng-container>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true" class="table-groups__header"></mat-header-row>
+
+      <mat-row
+        *matRowDef="let row; columns: displayedColumns; let i = index"
+        (click)="onTableRowSelected(row, $event, i)"
+        class="table-groups__row"
+        [class]="row.class"
+        [ngStyle]="filter?.method | tableCellFormat: row"
+      ></mat-row>
+
+      <ng-container *ngIf="showSummary">
+        <mat-footer-row
+          *matFooterRowDef="displayedColumns; sticky: true"
+          [hidden]="!dataSource || !dataSource.length"
+        ></mat-footer-row>
+      </ng-container>
+    </mat-table>
+
+    <ng-container *ngIf="(pagination$ | async)?.total">
+      <mat-paginator
+        *ngIf="pagination$ | async as pagination"
+        [pageIndex]="pagination.pageIndex"
+        [pageSize]="pagination.pageSize"
+        [length]="pagination.total"
+        [pageSizeOptions]="pageSizeOptions"
+        (page)="paginatorChange($event)"
+        class="table-groups__footer"
+      ></mat-paginator>
+    </ng-container>
+
+    <div *ngIf="dataSource && !dataSource.length" class="table-empty__block">
+      <mat-icon>block</mat-icon>
+      Нет записей
+    </div>
+  </div>
+</div>

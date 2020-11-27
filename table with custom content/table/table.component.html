@@ -1,0 +1,44 @@
+<div class="simple-table" [ngClass]="{ 'table-groups_new-ui': isNewUI() }" *ngIf="displayedColumns">
+  <mat-table
+    [dataSource]="dataSource"
+    class="mat-elevation-z8 table"
+    [ngClass]="{ 'table-empty': !dataSource || !dataSource.length }"
+  >
+    <ng-container *ngFor="let column of columnsDescription" [matColumnDef]="column.key">
+      <mat-header-cell [style.maxWidth]="column.width" *matHeaderCellDef>{{ column.header }}</mat-header-cell>
+      <mat-cell *matCellDef="let row" [style.maxWidth]="column.width">
+        <ng-container [ngSwitch]="column.type">
+          <ng-container *ngSwitchCase="'content'">
+            <ng-container
+              *ngTemplateOutlet="
+                templateSortedByKeyList[column.key];
+                context: { id: row.id, cellValue: column.cell | tableCellFormat: row }
+              "
+            >
+            </ng-container>
+          </ng-container>
+
+          <ng-container *ngSwitchDefault>
+            {{ column.cell | tableCellFormat: row | translate }}
+          </ng-container>
+        </ng-container>
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+  </mat-table>
+
+  <mat-paginator
+    *ngIf="pagination$ | async as pagination"
+    [pageIndex]="pagination?.pageIndex"
+    [pageSize]="pagination?.pageSize"
+    [length]="pagination?.total"
+    [pageSizeOptions]="pageSizeOptions"
+  ></mat-paginator>
+
+  <div *ngIf="!dataSource || !dataSource.length" class="table-empty__block">
+    <mat-icon>block</mat-icon>
+    Нет записей
+  </div>
+</div>

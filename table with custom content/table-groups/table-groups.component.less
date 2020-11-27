@@ -1,0 +1,189 @@
+@import "~src/styles/styles";
+
+:host {
+  padding-bottom: 64px;
+}
+
+mat-cell.cdk-column-resolution_trip_count,
+mat-cell.cdk-column-resolution_date_from,
+mat-cell.cdk-column-resolution_date,
+mat-cell.cdk-column-dateFrom,
+mat-cell.cdk-column-totalWeight,
+mat-cell.cdk-column-tripCount,
+mat-cell.cdk-column-invoice_paid_amount,
+mat-cell.cdk-column-invoice_amount,
+mat-cell.cdk-column-date,
+mat-cell.cdk-column-actionDate,
+mat-cell.cdk-column-travelCount,
+mat-cell.cdk-column-registrationNumber,
+mat-cell.cdk-column-approvedNumber,
+mat-cell.cdk-column-sendingDate,
+mat-cell.cdk-column-receivingDate,
+mat-cell.cdk-column-amountDamage,
+mat-cell.cdk-column-agreementNumber,
+mat-cell.cdk-column-invoiceAmount,
+mat-cell.cdk-column-paymentAmount,
+mat-cell.cdk-column-requestsCount,
+mat-footer-cell.cdk-column-requestsCount,
+mat-cell.cdk-column-requestRefusedCount,
+mat-footer-cell.cdk-column-requestRefusedCount,
+mat-cell.cdk-column-requestComplitedCount,
+mat-footer-cell.cdk-column-requestComplitedCount,
+mat-cell.cdk-column-requestComplitedCountWeek,
+mat-footer-cell.cdk-column-requestComplitedCountWeek,
+mat-cell.cdk-column-requestComplitedCountMonth,
+mat-footer-cell.cdk-column-requestComplitedCountMonth,
+mat-cell.cdk-column-withoutExecutor,
+mat-footer-cell.cdk-column-withoutExecutor,
+mat-cell.cdk-column-rejectedCount,
+mat-footer-cell.cdk-column-rejectedCount,
+mat-cell.cdk-column-approvedCount,
+mat-footer-cell.cdk-column-approvedCount,
+mat-cell.cdk-column-approvedCountWeek,
+mat-footer-cell.cdk-column-approvedCountWeek,
+mat-cell.cdk-column-approvedCountMonth,
+mat-footer-cell.cdk-column-approvedCountMonth {
+  justify-content: flex-end;
+
+  text-align: right;
+
+  span {
+    margin-left: auto;
+
+    text-align: right;
+  }
+}
+
+mat-cell.cdk-column-invoiceNumber,
+mat-cell.cdk-column-invoice_date,
+mat-cell.cdk-column-paymentDate,
+mat-cell.cdk-column-invoiceDate,
+mat-cell.cdk-column-status,
+mat-cell.cdk-column-farmMachine,
+mat-header-cell {
+
+  justify-content: center;
+
+  text-align: center;
+
+  span {
+    text-align: center;
+  }
+}
+
+.table-groups {
+  height: 400px;
+  overflow: auto;
+
+  .table {
+    min-width: 1200px;
+    margin-bottom: 0;
+  }
+
+  .mat-cell,
+  .mat-header-cell {
+    &:not(last-of-type) {
+      border-right: 1px solid rgba(@light-gray, 0.4);
+    }
+  }
+
+  .mat-cell span {
+    word-break: break-word;
+  }
+
+  &__loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &_new-ui {
+    flex: 1 1 auto;
+
+    .mat-header-cell {
+      border: none;
+    }
+
+    .mat-cell {
+      border: none;
+    }
+
+    .mat-row {
+      border-bottom: 1px solid @light-gray;
+    }
+
+    .mat-header-row {
+      border-bottom: 8px solid rgba(@light-gray, 0.4);
+    }
+
+    .mat-footer-row {
+      border-bottom: 1px solid @semi-gray;
+    }
+
+    .mat-footer-cell {
+      padding-left: 10px;
+      font-weight: 700;
+    }
+
+    .cell-status__wrapper {
+      display: flex;
+      width: 100%;
+      justify-content: center;
+
+      span {
+        border-radius: 8px;
+        padding: 2px 10px;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+      }
+    }
+  }
+
+  &__row {
+    cursor: pointer;
+
+    &:hover:not(.table-groups__row_active) {
+      background: @lightest-gray;
+    }
+
+    &_active {
+      background: rgba(@primary-color, 0.15);
+    }
+
+    &.danger {
+      background: rgba(247, 44, 44, 0.15);
+    }
+    &.warning {
+      background: rgba(241, 194, 49, 0.15);
+    }
+  }
+
+  &__footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 10;
+  }
+
+  ::ng-deep {
+    .mat-paginator-container {
+      justify-content: center;
+    }
+  }
+}
+
+::ng-deep .mat-header-cell .mat-sort-header-container.mat-sort-header-sorted .mat-sort-header-arrow {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+}
+
+.cdk-column-{
+  &fact_full_weight,
+  &fact_axle_load{
+    span[highlighting="true"]{
+      color: #F00;
+    }
+  }
+}
